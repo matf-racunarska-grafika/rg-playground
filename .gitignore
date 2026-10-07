@@ -3,10 +3,15 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=c++,cmake,clion,clion+all,clion+iml,c
 
 
-example**
+/example[0-9]*
+
+.cache/
 
 ### bin ###
 bin/
+build/
+cmake-build-debug/
+cmake-build-release/
 
 ### C ###
 # Prerequisites

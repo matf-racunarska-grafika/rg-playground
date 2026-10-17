@@ -6,9 +6,9 @@ This project relies on several libraries. Some are bundled within the project (g
 
 Based on `CMakeLists.txt`, you need to install the following dependencies:
 
-*   **GLFW3**: For window creation and context management.
-*   **Assimp**: For model loading.
-*   **OpenGL**: Standard OpenGL libraries.
+- **GLFW3**: For window creation and context management.
+- **Assimp**: For model loading.
+- **OpenGL**: Standard OpenGL libraries.
 
 You can install these on Ubuntu/Debian-based systems using `apt`:
 
@@ -17,16 +17,15 @@ sudo apt-get update
 sudo apt install cmake git build-essential libglfw3 libglfw3-dev libx11-dev libxrandr-dev libxi-dev libxxf86vm-dev libxcursor-dev libwayland-dev libxkbcommon-dev xorg-dev libgl1-mesa-dev mesa-common-dev mesa-utils doxygen graphviz libsoil-dev libglm-dev libassimp-dev libglew-dev libglfw3-dev libxinerama-dev libxcursor-dev libxi-dev
 ```
 
-*Note: Standard OpenGL and system libraries (X11, dl, pthread, etc.) are usually available by default or installed with build-essentials/graphics drivers.*
+_Note: Standard OpenGL and system libraries (X11, dl, pthread, etc.) are usually available by default or installed with build-essentials/graphics drivers._
 
 ## 1. Building from Terminal
 
-To build the project, use the following commands:
+To build the examples, use the following commands:
 
 ```bash
 cmake -S . -B build
 cmake --build build --parallel
-./example1
 ```
 
 ### Adding and Running Multiple Examples
@@ -34,31 +33,34 @@ cmake --build build --parallel
 The project is configured to automatically generate a separate executable for every `.cpp` file found in the `src/` directory.
 
 **To add a new example:**
+
 1.  Create a new `.cpp` file in the `src/` directory (e.g., `src/my_example.cpp`).
 2.  Write your code in this file. Ensure it has a `main` function.
 
 If you have added a new file, you need to re-run cmake to detect it:
+
 ```bash
 cmake -S . -B build
 cmake --build build --parallel
 ```
 
 **To run:**
-The executable will be named after your source file (without the extension) and placed in the project root directory.
+The executable will be named after your source file (without the extension) and placed in the project `build` directory.
+To run the example:
+
 ```bash
+cd build/
 ./my_example
 ```
-
-
-
 
 ## 2. How to use Shader class
 
 The `Shader` class abstracts the details of compiling and linking vertex and fragment shaders.
 
 **Include:**
+
 ```cpp
-#include <rg/Shader.hpp>
+#include <learnopengl/shader.h>
 ```
 
 **Initialization:**
@@ -70,12 +72,14 @@ Shader myShader("resources/shaders/vertex_shader.vs", "resources/shaders/fragmen
 
 **Usage:**
 To activate the shader program before drawing:
+
 ```cpp
 myShader.use();
 ```
 
 **Setting Uniforms:**
 The class provides utility functions to set uniform variables in the shader.
+
 ```cpp
 // Bool, Int, Float
 myShader.setBool("useTexture", true);
@@ -96,8 +100,9 @@ myShader.setMat4("projection", projection);
 The `Model` class handles loading 3D models using the Assimp library. It processes meshes and textures automatically.
 
 **Include:**
+
 ```cpp
-#include <rg/Model.hpp>
+#include <learnopengl/model.h>
 ```
 
 **Initialization:**
@@ -121,6 +126,7 @@ ourModel.Draw(myShader);
 This project bundles ImGui. To use it in your `main.cpp`, you need to initialize the context, setup the platform/renderer backends, and render the draw data.
 
 **Includes:**
+
 ```cpp
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
@@ -128,6 +134,7 @@ This project bundles ImGui. To use it in your `main.cpp`, you need to initialize
 ```
 
 **Initialization (before render loop):**
+
 ```cpp
 // Setup Dear ImGui context
 IMGUI_CHECKVERSION();
@@ -143,6 +150,7 @@ ImGui_ImplOpenGL3_Init("#version 330");
 ```
 
 **Rendering (inside render loop):**
+
 ```cpp
 while (!glfwWindowShouldClose(window)) {
     // ... other rendering code ...
@@ -167,9 +175,9 @@ while (!glfwWindowShouldClose(window)) {
 ```
 
 **Cleanup (after render loop):**
+
 ```cpp
 ImGui_ImplOpenGL3_Shutdown();
 ImGui_ImplGlfw_Shutdown();
 ImGui::DestroyContext();
 ```
-
